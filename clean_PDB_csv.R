@@ -3,7 +3,7 @@
 # Purpose: Counts PDB Identifiers with Chain A out of a CSV file, 
 # 		and creates new file with only those records
 # Note: May need to replace spaces with underscores in CSV header names
-# Last Revised: 31 Jan 2019
+# Year: 2019
 #*************************************************************************
 
 
