@@ -2,7 +2,7 @@
 # Programmer: Scott Schoeller (sschoellerSTEM)
 # Purpose: Counts PDB Identifiers with Chain A out of a CSV file
 # Note: May need to replace spaces with underscores in CSV header names
-# Last Revised: 31 Jan 2019
+# Year: 2019
 #*************************************************************************
 
 
