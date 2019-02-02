@@ -7,27 +7,25 @@
 #*************************************************************************
 
 
-f<-"Brugia-test.csv" # change the value of f if not tabularResults.csv 
+f<-"" # change the value of f if not tabularResults.csv 
 o<-"newfile.csv" # output file
 
 if (f == "")
   f<-"tabularResults.csv" # default Protein Data Bank CSV
 
-csv<-read.table(file=f, header=TRUE, sep=",")
+csv<-read.table(file=f, header=TRUE, sep=",", rm.na=TRUE)
 
 uniqueID<-csv$PDB_ID[csv$Chain_ID == "A"] # Selects Chain "A" records
 
 num<-1 # index counter
 
-# Prepare CSV headers
-headers<-rbind("Record_ID","PDB_ID", "Chain_ID", "Macromolcular_Name", "Source", "Exp_Method", "Dep_Date", "Rel_Date", "Classification", "MW", "Author", "Residue_Count")
-write.table(headers, file=o, append=FALSE, sep=",")
-
 for (record in csv) {
   num<-num+1
-  if (regexpr(csv[num,2], "A", fixed=TRUE)) { # csv$Chain_ID
-	  print(csv[num,]) # typically for debugging
-		dat<-(csv[num,])
-	  write.table(dat, file=o, append=TRUE, sep=",")
+  if (regexpr(csv[num,2],"A{1}")) { # csv$Chain_ID
+	  print(cbind(csv[num,-2])) # typically for debugging
+		dat<-cbind(csv[num,])
+		
+		# write information on a new line in the output file
+	  write.table(dat, file=o, append=TRUE, sep=",", row.names=FALSE)
   } # end if (regexpr...)
 } # end for (record...)
