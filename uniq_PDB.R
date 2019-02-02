@@ -13,7 +13,9 @@ if (f == "")
 
 csv<-read.table(file=f, header=TRUE, sep=",")
 
-uniqueID<-csv$PDB_ID[csv$Chain_ID == "A"] # Selects Chain "A" records
+uniqueID<-csv[,1][csv[,2] == "A"] # Selects Chain "A" records
+
+#print(uniqueID) # typically for debugging
 
 num<-0 # counter
 
@@ -23,5 +25,3 @@ for (item in uniqueID) {
 }
 
 print(num)
-
-

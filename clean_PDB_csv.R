@@ -13,19 +13,25 @@ o<-"newfile.csv" # output file
 if (f == "")
   f<-"tabularResults.csv" # default Protein Data Bank CSV
 
-csv<-read.table(file=f, header=TRUE, sep=",", rm.na=TRUE)
+csv<-read.table(file = f, header = TRUE, sep = ",")
 
-uniqueID<-csv$PDB_ID[csv$Chain_ID == "A"] # Selects Chain "A" records
+# write headers
+headers<-cbind("PDB_ID", "Macromolecule_Name", "Source", "Structure Title", "Exp_Method",	"Dep_Date", "Rel_Date", "Classification",	"Structure_MW", "Structure_Author", "Residue_Count")
+write.table(headers, file = o, append = FALSE, sep=",", row.names = FALSE, col.names = FALSE)
 
-num<-1 # index counter
-
-for (record in csv) {
+# filter and write out relevant data
+num<-0 # index counter
+for (record in cbind(csv[,1])) { # count distinct rows only
   num<-num+1
-  if (regexpr(csv[num,2],"A{1}")) { # csv$Chain_ID
-	  print(cbind(csv[num,-2])) # typically for debugging
-		dat<-cbind(csv[num,])
+  print(record) # for debugging
+  
+  test<-substr(csv[num,2], start = 1, stop = 1)
+  if (test == "A") { # csv$Chain_ID
+    # remove Chain ID from output
+	  #print(cbind(csv[num,-2])) # typically for debugging
+		dat<-cbind(csv[num,-2])
 		
 		# write information on a new line in the output file
-	  write.table(dat, file=o, append=TRUE, sep=",", row.names=FALSE)
-  } # end if (regexpr...)
+	  write.table(dat, file = o, append = TRUE, sep = ",", row.names = FALSE, col.names = FALSE)
+  } # end if (test...)
 } # end for (record...)
